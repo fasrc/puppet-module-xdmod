@@ -3,8 +3,6 @@ class xdmod::install {
 
   case $::osfamily {
     'RedHat': {
-      include ::epel
-      $package_require = Yumrepo['epel']
     }
     default: {
       # Do nothing
@@ -14,7 +12,6 @@ class xdmod::install {
   package { 'xdmod':
     ensure  => $xdmod::package_ensure,
     name    => $xdmod::package_name,
-    require => $package_require,
   }
 
 }
