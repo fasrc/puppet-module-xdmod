@@ -17,15 +17,16 @@ class xdmod::apache {
       $xdmod_nonssl_allow = 'from 127.0.0.0/255.0.0.0 ::1/128'
 
       ::apache::vhost { 'xdmod_ssl':
-        servername     => $xdmod::apache_vhost_name,
-        port           => $xdmod::apache_ssl_port,
-        ssl            => true,
-        docroot        => '/usr/share/xdmod/html',
-        manage_docroot => false,
-        ssl_cert       => $xdmod::apache_ssl_cert,
-        ssl_key        => $xdmod::apache_ssl_key,
-        ssl_chain      => $xdmod::apache_ssl_chain,
-        directories    => [
+        servername      => $xdmod::apache_vhost_name,
+        port            => $xdmod::apache_ssl_port,
+        ssl             => true,
+        docroot         => '/usr/share/xdmod/html',
+        manage_docroot  => false,
+        ssl_cert        => $xdmod::apache_ssl_cert,
+        ssl_key         => $xdmod::apache_ssl_key,
+        ssl_chain       => $xdmod::apache_ssl_chain,
+        custom_fragment => 'AddType application/x-httpd-php .php',
+        directories     => [
           {
             path           => '/usr/share/xdmod/html',
             options        => ['FollowSymLinks'],
@@ -48,6 +49,11 @@ class xdmod::apache {
               }
             ],
           },
+          {
+            path     => '\.php$',
+            provider => 'filesmatch',
+            handler  => 'application/x-httpd-php'
+          }
         ]
       }
     } else {
