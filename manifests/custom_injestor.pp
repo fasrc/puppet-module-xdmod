@@ -7,13 +7,12 @@ class xdmod::custom_injestor {
     group   => 'root',
   }
 
-  file { '/etc/crontab':
-    ensure  => present,
-    owner   => 'root',
+  cron { 'sacct2xdmod':
+    command => '/usr/local/sbin/sacct2xdmod.sh',
+    user    => 'root',
     group   => 'root',
-    file_line {'Adding sacct2xdmod to crontab':
-      path => '/etc/crontab',  
-      line => '00 01 * * * root /usr/local/sbin/sacct2xdmod.sh',
-    }
+    hour    => '1',
+    minute  => '0',
+    require => File['/usr/local/sbin/sacct2xdmod.sh'],
   }
 }
