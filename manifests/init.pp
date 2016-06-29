@@ -28,6 +28,7 @@ class xdmod (
   $hierarchies          = $xdmod::params::hierarchies,
   $group_to_hierarchy   = $xdmod::params::group_to_hierarchy,
   $user_pi_names        = $xdmod::params::user_pi_names,
+  $custom_injestor      = true,
 ) inherits xdmod::params {
 
   validate_bool($database, $web, $enable_update_check, $apache_ssl, $manage_apache_vhost)
@@ -88,6 +89,9 @@ class xdmod (
     Class['xdmod::config']->
     Class['xdmod::apache']->
     Anchor['xdmod::end']
+  }
+  if $custom_injestor {
+    include xdmod::custom_injestor
   }
 
 }
