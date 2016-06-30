@@ -11,7 +11,7 @@ grep -v ^0_0 /tmp/sacct-${ndate}.log > /tmp/sacct-${ndate}.v2.log
 grep -v ^$ /tmp/sacct-${ndate}.v2.log > /tmp/slurm-${ndate}.log
 
 # Step 2 - Shred Data into XDMoD DB
-xdmod-shredder -v -r <%= @xdmod::params::resource_name %> -f <%= @xdmod::scheduler %> -i /tmp/<%= @xdmod::scheduler %>-${ndate}.log &>> /var/log/xdmod/shredder.log
+xdmod-shredder -v -r <%= scope.lookupvar('xdmod::params::resource_name') %> -f <%= scope.lookupvar('xdmod::scheduler') %> -i /tmp/<%= scope.lookupvar('xdmod::scheduler') %>-${ndate}.log &>> /var/log/xdmod/shredder.log
 
 # Step 3 - Ingest the data to make Summaries from hierarchy
 xdmod-ingestor -v --start-date ${ndate} &>> /var/log/xdmod/ingestor.log
