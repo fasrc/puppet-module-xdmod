@@ -6,4 +6,4 @@
 <% end -%>
 
 # Shred and ingest:
-0 1 * * * root <%= scope.lookupvar('xdmod::shredder_command_real') %> && /usr/bin/xdmod-ingestor --quiet
+0 1 * * * root <%= scope.lookupvar('xdmod::shredder_command_real') %>

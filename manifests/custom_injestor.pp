@@ -6,13 +6,4 @@ class xdmod::custom_injestor {
     owner   => 'root',
     group   => 'root',
   }
-
-  cron { 'sacct2xdmod':
-    command => '/usr/local/sbin/sacct2xdmod.sh',
-    user    => 'root',
-    group   => 'root',
-    hour    => '1',
-    minute  => '0',
-    require => File['/usr/local/sbin/sacct2xdmod.sh'],
-  }
 }
