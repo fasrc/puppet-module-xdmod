@@ -5,7 +5,7 @@ class xdmod::install (
 
   case $::osfamily {
     'RedHat': {
-      $provider = 'rpm',
+      $provider = 'rpm'
     }
     default: {
       # Do nothing
