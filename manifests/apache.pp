@@ -5,6 +5,15 @@ class xdmod::apache {
     include ::apache
     include ::apache::mod::php
 
+    ensure_resource('file', '/etc/http/conf.d/php.load', {
+      'ensure'  => 'file',
+      'content' => 'LoadModule php5_module modules/libphp5.so',
+      'owner'   => 'root',
+      'group'   => 'root',
+      'mode'    => '0644',
+      'require' => "Package['php']",
+      })
+
     if $xdmod::apache_ssl {
       $xdmod_ssl_rewrites = [
         {
