@@ -5,15 +5,6 @@ class xdmod::apache {
     include ::apache
     include ::apache::mod::php
 
-    ensure_resource('file', '/etc/http/conf.d/php.load', {
-      'ensure'  => 'file',
-      'content' => 'LoadModule php5_module modules/libphp5.so',
-      'owner'   => 'root',
-      'group'   => 'root',
-      'mode'    => '0644',
-      'require' => "Package['php']",
-      })
-
     if $xdmod::apache_ssl {
       $xdmod_ssl_rewrites = [
         {
@@ -25,6 +16,11 @@ class xdmod::apache {
       $xdmod_nonssl_order = 'deny,allow'
       $xdmod_nonssl_deny  = 'from all'
       $xdmod_nonssl_allow = 'from 127.0.0.0/255.0.0.0 ::1/128'
+
+      ::apache::mod { 'php':
+        path => 'modules/libphp5.so',
+        id   => 'php5_module',
+      }
 
       ::apache::vhost { 'xdmod_ssl':
         servername      => $xdmod::apache_vhost_name,
