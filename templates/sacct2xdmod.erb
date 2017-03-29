@@ -5,7 +5,7 @@
 ndate=`date -d yesterday +%F`
 
 # Step 1 - Create slurm log
-TZ=UTC sacct --allusers --allclusters --parsable2 --noheader --allocations --format jobid,cluster,partition,account,group,user,submit,eligible,start,end,elapsed,exitcode,nnodes,ncpus,nodelist,jobname --state CANCELLED,COMPLETED,FAILED,NODE_FAIL,PREEMPTED,TIMEOUT --starttime ${ndate}T00:00:00 --endtime ${ndate}T23:59:59 > /tmp/sacct-${ndate}.log
+TZ=UTC sacct --allusers --allclusters --parsable2 --noheader --allocations --format jobid,jobidraw,cluster,partition,account,group,gid,user,uid,submit,eligible,start,end,elapsed,exitcode,state,nnodes,ncpus,reqcpus,reqmem,reqgres,reqtres,timelimit,nodelist,jobname --state CANCELLED,COMPLETED,FAILED,NODE_FAIL,PREEMPTED,TIMEOUT --starttime ${ndate}T00:00:00 --endtime ${ndate}T23:59:59 > /tmp/sacct-${ndate}.log
 # clean up any bad data
 grep -v ^0_0 /tmp/sacct-${ndate}.log > /tmp/sacct-${ndate}.v2.log
 grep -v ^$ /tmp/sacct-${ndate}.v2.log > /tmp/slurm-${ndate}.log
