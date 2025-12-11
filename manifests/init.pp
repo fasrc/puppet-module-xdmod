@@ -262,34 +262,6 @@
 #   Manage Storage cron files
 #
 class xdmod (
-<<<<<<< HEAD
-  $database             = true,
-  $web                  = true,
-  $resource_name        = $xdmod::params::resource_name,
-  $package_ensure       = 'present',
-  $package_name         = $xdmod::params::package_name,
-  $database_host        = 'localhost',
-  $database_port        = '3306',
-  $database_user        = 'xdmod',
-  $database_password    = 'changeme',
-  $web_host             = undef,
-  $scheduler            = 'slurm',
-  $shredder_command     = undef,
-  $enable_update_check  = true,
-  $manage_apache_vhost  = true,
-  $apache_vhost_name    = $xdmod::params::apache_vhost_name,
-  $apache_port          = '80',
-  $apache_ssl           = true,
-  $apache_ssl_port      = '443',
-  $apache_ssl_cert      = undef,
-  $apache_ssl_key       = undef,
-  $apache_ssl_chain     = undef,
-  $portal_settings      = $xdmod::params::portal_settings,
-  $hierarchies          = $xdmod::params::hierarchies,
-  $group_to_hierarchy   = $xdmod::params::group_to_hierarchy,
-  $user_pi_names        = $xdmod::params::user_pi_names,
-  $custom_injestor      = true,
-=======
   String $version                  = $xdmod::params::version,
   String $xdmod_appkernels_version = $xdmod::params::xdmod_appkernels_version,
   String $xdmod_supremm_version    = $xdmod::params::xdmod_supremm_version,
@@ -450,7 +422,6 @@ class xdmod (
   Boolean $manage_akrr_cron = true,
   Boolean $manage_appkernel_cron = true,
   Boolean $manage_storage_cron = true,
->>>>>>> upstream/master
 ) inherits xdmod::params {
   case $scheduler {
     'slurm': {
@@ -480,9 +451,6 @@ class xdmod (
         fail("Module ${module_name}: pcp_resource must be defined.")
       }
     }
-  }
-  if $custom_injestor {
-    include xdmod::custom_injestor
   }
 
   $storage_resources = $resources.filter |$r| { $r['resource_type'] == 'Disk' }
